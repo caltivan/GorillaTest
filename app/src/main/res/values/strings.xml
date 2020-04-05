@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">GorillaTest</string>
 
-    
+    <string name="main_title">Welcome</string>
+    <string name="order_button_text">Order %s item</string>
+    <string name="start_order_button_text">Start new order</string>
+
+
 </resources>

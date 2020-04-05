@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#7fd0d3</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimaryDark">#7fd0d3</color>
+    <color name="colorAccent">#0b7d81</color>
+    <color name="colorText">#ffffff</color>
+    <color name="colorMainBackground">#ffffff</color>
+
+    <color name="colorTextNameItem">#000000</color>
+    <color name="colorTextPriceItem">#c0c0c0</color>
+
+    <color name="colorOrangeBackground">#e6954e</color>
+    <color name="gridBorderColor">#c0c0c0</color>
+
+
 </resources>

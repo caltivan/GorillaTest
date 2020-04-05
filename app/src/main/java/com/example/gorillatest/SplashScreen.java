@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.gorillatest.view.MainActivity;
+
 public class SplashScreen extends AppCompatActivity {
 
     private Context mContext;
