@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int RECEIPT_REQUEST_CODE = 1000;
     private Context mContext;
     private RecyclerView itemsRecycleView;
 
@@ -44,4 +46,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public  void onOrderClickAction(View v) {
+        Intent intent = new Intent(mContext, ReceiptActivity.class);
+        startActivityForResult(intent,RECEIPT_REQUEST_CODE);
+
+    }
+
 }

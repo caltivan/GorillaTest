@@ -4,6 +4,7 @@
     <string name="main_title">Welcome</string>
     <string name="order_button_text">Order %s item</string>
     <string name="start_order_button_text">Start new order</string>
+    <string name="thank_text">Thank you!</string>
 
 
 </resources>

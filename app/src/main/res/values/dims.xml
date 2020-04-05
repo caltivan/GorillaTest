@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="guideline_splashscreen">0.4</dimen>>
+    <dimen name="guideline_main_bottom">0.90</dimen>>
 
-    <dimen name="guideline_mainscreen_button">0.88</dimen>>
+    <dimen name="guideline_receipt_left">0.10</dimen>>
+    <dimen name="guideline_receipt_right">0.90</dimen>>
+    <dimen name="guideline_receipt_top">0.20</dimen>>
+    <dimen name="guideline_receipt_total">0.55</dimen>>
+    <dimen name="guideline_receipt_bottom">0.70</dimen>>
+
     <dimen name="padding_item">20dp</dimen>
     <dimen name="margin_item">8dp</dimen>
     <dimen name="grid_border_width">0.5dp</dimen>>
-
 
 </resources>
