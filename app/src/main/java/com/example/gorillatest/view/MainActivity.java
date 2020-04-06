@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gorillatest.model.Item;
 import com.example.gorillatest.viewmodel.ItemViewModel;
@@ -73,10 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onOrderClickAction(View v) {
-        Intent intent = new Intent(mContext, ReceiptActivity.class);
-        Gson gson = new Gson();
-        intent.putExtra(ORDER_EXTRAS, gson.toJson(viewModel.items.getValue()));
-        startActivityForResult(intent, RECEIPT_REQUEST_CODE);
+        if (viewModel.getTotalOrders() > 0) {
+            Intent intent = new Intent(mContext, ReceiptActivity.class);
+            Gson gson = new Gson();
+            intent.putExtra(ORDER_EXTRAS, gson.toJson(viewModel.getOrderItems()));
+            startActivityForResult(intent, RECEIPT_REQUEST_CODE);
+        } else {
+            Toast.makeText(mContext, "ORDER IS EMPTY", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

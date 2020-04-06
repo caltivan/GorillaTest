@@ -43,6 +43,16 @@ public class ItemViewModel extends AndroidViewModel {
         });
     }
 
+    public ArrayList<Item> getOrderItems(){
+        ArrayList<Item> orderItems = new ArrayList<Item>();
+        for(Item item:items.getValue()){
+            if(item.selection !=0){
+                orderItems.add(item);
+            }
+        }
+        return  orderItems;
+    }
+
     public int getTotalOrders(){
         int total = 0;
         for(Item item:items.getValue()){
