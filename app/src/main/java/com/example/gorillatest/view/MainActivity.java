@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter itemAdapter;
     private ItemViewModel viewModel;
     private Button placeOrderButton;
+    private int lastUpdate = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +48,30 @@ public class MainActivity extends AppCompatActivity {
         placeOrderButton = findViewById(R.id.placeOrderButton);
 
         viewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
-        viewModel.loadItems();
+        int numberOfColumns = 2;
+        itemsRecycleView.setLayoutManager(new GridLayoutManager(mContext, numberOfColumns));
+        itemAdapter = new ItemAdapter(MainActivity.this);
+        itemsRecycleView.setAdapter(itemAdapter);
+        String buttonText = String.format(mContext.getString(R.string.order_button_text), String.valueOf(viewModel.getTotalOrders()));
+        placeOrderButton.setText(buttonText);
 
         viewModel.items.observeForever(new Observer<ArrayList<Item>>() {
             @Override
             public void onChanged(ArrayList<Item> items) {
-                int numberOfColumns = 2;
-                itemsRecycleView.setLayoutManager(new GridLayoutManager(mContext, numberOfColumns));
-                itemAdapter = new ItemAdapter(MainActivity.this);
-                itemsRecycleView.setAdapter(itemAdapter);
+                if (items.size() > 0 && items.size() != lastUpdate) {
+                    lastUpdate = items.size();
+                    itemAdapter = new ItemAdapter(MainActivity.this);
+                    itemsRecycleView.setAdapter(itemAdapter);
+                }
+                itemAdapter.notifyDataSetChanged();
                 String buttonText = String.format(mContext.getString(R.string.order_button_text), String.valueOf(viewModel.getTotalOrders()));
                 placeOrderButton.setText(buttonText);
 
             }
         });
+
+        viewModel.loadItems();
+
     }
 
     @Override
@@ -68,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RECEIPT_REQUEST_CODE) {
+            lastUpdate = 0;
             viewModel.loadItems();
         }
     }
