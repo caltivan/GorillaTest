@@ -1,6 +1,7 @@
 package com.example.gorillatest.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,9 +44,13 @@ public class ReceiptActivity extends AppCompatActivity {
                 totalValue += item.selection * Float.parseFloat(item.price.replace("$", ""));
             }
             totalTextView.setText(String.format("Total = $%.2f", totalValue));
-
-            itemsRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
             itemAdapter = new OrderAdapter(mContext,items);
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, layoutManager.getOrientation());
+
+            itemsRecycleView.setLayoutManager(layoutManager);
+            itemsRecycleView.addItemDecoration(dividerItemDecoration);
             itemsRecycleView.setAdapter(itemAdapter);
         }
     }

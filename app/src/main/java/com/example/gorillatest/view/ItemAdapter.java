@@ -3,10 +3,15 @@ package com.example.gorillatest.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,6 +55,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         String name = String.format("%s %s", mData.get(position).name1, mData.get(position).name2);
         holder.mItemNameTextView.setText(name);
         holder.mItemPriceTextView.setText(mData.get(position).price);
+       // holder.mItemImageView.setBackgroundColor(Color.parseColor(mData.get(position).bg_color));
+        Drawable background = holder.mItemImageView.getBackground();
+        if (background instanceof ShapeDrawable) {
+            // cast to 'ShapeDrawable'
+            ShapeDrawable shapeDrawable = (ShapeDrawable) background;
+            shapeDrawable.getPaint().setColor(Color.parseColor(mData.get(position).bg_color));
+        }else if (background instanceof GradientDrawable) {
+            // cast to 'GradientDrawable'
+            GradientDrawable gradientDrawable = (GradientDrawable) background;
+            gradientDrawable.setColor(Color.parseColor(mData.get(position).bg_color));
+        } else if (background instanceof ColorDrawable) {
+            // alpha value may need to be set again after this call
+            ColorDrawable colorDrawable = (ColorDrawable) background;
+            colorDrawable.setColor(Color.parseColor(mData.get(position).bg_color));
+        }
+        if (mData.get(position).type.equalsIgnoreCase("popsicle")) {
+            holder.mItemImageView.setImageResource(R.drawable.popsicle);
+        } else if (mData.get(position).type.equalsIgnoreCase("froyo")) {
+            holder.mItemImageView.setImageResource(R.drawable.froyo);
+        } else if (mData.get(position).type.equalsIgnoreCase("cone")) {
+            holder.mItemImageView.setImageResource(R.drawable.cone);
+
+        } else if (mData.get(position).type.equalsIgnoreCase("ice_cream")) {
+            holder.mItemImageView.setImageResource(R.drawable.ice_cream);
+        }
         if (mData.get(position).selection != 0) {
             holder.itemLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.grid_select_background));
             holder.mCounterTextView.setVisibility(View.VISIBLE);
@@ -87,10 +117,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView mItemNameTextView;
         TextView mItemPriceTextView;
         TextView mCounterTextView;
+        ImageView mItemImageView;
 
         LinearLayout itemLayout;
 
@@ -100,6 +131,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             mItemPriceTextView = itemView.findViewById(R.id.priceTextView);
             itemLayout = itemView.findViewById(R.id.itemLayout);
             mCounterTextView = itemView.findViewById(R.id.countTextView);
+            mItemImageView = itemView.findViewById(R.id.itemImageView);
+
         }
 
     }

@@ -35,10 +35,11 @@
 
         <ImageView
             android:id="@+id/itemImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:background="@drawable/item_icon_background"
             android:cropToPadding="false"
+            android:padding="10dp"
             app:srcCompat="@drawable/cone" />
 
         <TextView

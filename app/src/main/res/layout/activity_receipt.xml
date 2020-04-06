@@ -72,10 +72,13 @@
             android:id="@+id/totalTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:padding="10dp"
+            android:textAlignment="textEnd"
             android:textAllCaps="true"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Total" />
 
         <TextView
             android:id="@+id/textView5"

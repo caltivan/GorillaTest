@@ -38,7 +38,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        String name = String.format("%s %s (%s)", mData.get(position).name1, mData.get(position).name2, mData.get(position).selection);
+        String name = String.format("%s %s", mData.get(position).name1, mData.get(position).name2);
+        if (mData.get(position).selection > 1) {
+            name = String.format("%s %s (%s)", mData.get(position).name1, mData.get(position).name2, mData.get(position).selection);
+        }
         holder.mItemNameTextView.setText(name);
         holder.mItemPriceTextView.setText(mData.get(position).price);
     }
