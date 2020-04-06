@@ -6,4 +6,5 @@ public class Item {
     public String price;
     public String bg_color;
     public String type;
+    public int selection = 0;
 }
