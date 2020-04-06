@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ import com.example.gorillatest.R;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
 
     private static final int RECEIPT_REQUEST_CODE = 1000;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
     private RecyclerView itemsRecycleView;
     private ItemAdapter itemAdapter;
     private ItemViewModel viewModel;
+    private Button placeOrderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
 
         setContentView(R.layout.activity_main);
         itemsRecycleView = findViewById(R.id.itemsRecycleView);
+        placeOrderButton = findViewById(R.id.placeOrderButton);
 
         viewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         viewModel.loadItems();
@@ -48,9 +51,16 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
             public void onChanged(ArrayList<Item> items) {
                 int numberOfColumns = 2;
                 itemsRecycleView.setLayoutManager(new GridLayoutManager(mContext, numberOfColumns));
-                itemAdapter = new ItemAdapter(mContext, viewModel.items.getValue());
-                itemAdapter.setClickListener(MainActivity.this);
+                itemAdapter = new ItemAdapter(MainActivity.this);
+               // itemAdapter.setClickListener(MainActivity.this);
                 itemsRecycleView.setAdapter(itemAdapter);
+                int total = 0;
+                for(Item item:items){
+                    total += item.selection;
+                }
+                String buttonText = String.format(mContext.getString(R.string.order_button_text),String.valueOf(total));
+                placeOrderButton.setText(buttonText);
+
             }
         });
     }
@@ -61,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
 
     }
 
-    @Override
     public void onItemClick(View view, LinearLayout layout, int position) {
        // Log.i("TAG", "onItemClick " + itemAdapter.getItem(position) + ", which is at cell position " + position);
         ArrayList<Item> items = viewModel.items.getValue();
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
         } else {
             layout.setBackgroundColor(Color.RED);
         }
+
         Log.i("onItemClick", "onItemClick selection = " + item.selection);
         viewModel.items.postValue(items);
     }
