@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.gorillatest.model.Item;
 import com.example.gorillatest.viewmodel.ItemViewModel;
 import com.example.gorillatest.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final int RECEIPT_REQUEST_CODE = 1000;
+    private static final String ORDER_EXTRAS = "orderExtras";
     private Context mContext;
     private RecyclerView itemsRecycleView;
     private ItemAdapter itemAdapter;
@@ -52,38 +54,29 @@ public class MainActivity extends AppCompatActivity {
                 int numberOfColumns = 2;
                 itemsRecycleView.setLayoutManager(new GridLayoutManager(mContext, numberOfColumns));
                 itemAdapter = new ItemAdapter(MainActivity.this);
-               // itemAdapter.setClickListener(MainActivity.this);
                 itemsRecycleView.setAdapter(itemAdapter);
-                int total = 0;
-                for(Item item:items){
-                    total += item.selection;
-                }
-                String buttonText = String.format(mContext.getString(R.string.order_button_text),String.valueOf(total));
+                String buttonText = String.format(mContext.getString(R.string.order_button_text), String.valueOf(viewModel.getTotalOrders()));
                 placeOrderButton.setText(buttonText);
 
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            viewModel.loadItems();
+        }
+    }
+
+
     public void onOrderClickAction(View v) {
         Intent intent = new Intent(mContext, ReceiptActivity.class);
+        Gson gson = new Gson();
+        intent.putExtra(ORDER_EXTRAS, gson.toJson(viewModel.items.getValue()));
         startActivityForResult(intent, RECEIPT_REQUEST_CODE);
-
     }
 
-    public void onItemClick(View view, LinearLayout layout, int position) {
-       // Log.i("TAG", "onItemClick " + itemAdapter.getItem(position) + ", which is at cell position " + position);
-        ArrayList<Item> items = viewModel.items.getValue();
-        Item item = items.get(position);
-        item.selection++;
-        if (item.selection > 2) {
-            item.selection = 0;
-            //layout.setBackgroundColor(Color.WHITE);
-        } else {
-            layout.setBackgroundColor(Color.RED);
-        }
-
-        Log.i("onItemClick", "onItemClick selection = " + item.selection);
-        viewModel.items.postValue(items);
-    }
 }

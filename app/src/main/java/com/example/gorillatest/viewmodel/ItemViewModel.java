@@ -43,6 +43,13 @@ public class ItemViewModel extends AndroidViewModel {
         });
     }
 
+    public int getTotalOrders(){
+        int total = 0;
+        for(Item item:items.getValue()){
+            total += item.selection;
+        }
+        return total;
+    }
     private String getItemsService() {
         URL url;
         HttpsURLConnection urlConnection = null;
